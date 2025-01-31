@@ -15,11 +15,17 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
+        // dd($featured);
+
         $categories = Category::with(['articles' => function($query) {
             $query->published()->latest()->take(3);
         }])->get();
 
-        return view('frontend.home', compact('featured', 'categories'));
+        $popularArticles = Article::popular()->take(5)->get();
+
+        // dd($categories);
+
+        return view('frontend.home', compact('featured', 'categories', 'popularArticles'));
     }
 
     public function search(Request $request)

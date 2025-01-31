@@ -21,6 +21,12 @@ class Article extends Model
         'published_at',
     ];
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'published_at'
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -61,12 +67,12 @@ class Article extends Model
         return 'slug';
     }
 
-    public function getThumbnailAttribute()
-    {
-        return asset('storage/' . $this->thumbnail);
-    }
+    // public function getThumbnailAttribute()
+    // {
+    //     return asset('storage/' . $this->thumbnail);
+    // }
 
-    public function scopePopularArticles($query)
+    public function scopePopular($query)
     {
         return $query->withCount('views')->orderBy('views_count', 'desc');
     }
